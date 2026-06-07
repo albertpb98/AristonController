@@ -7,3 +7,5 @@ jobs:
     steps:
       - name: Hello
         run: echo "Funciona"
+      - name: Checkout
+        uses: actions/checkout@v3
