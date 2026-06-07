@@ -2,19 +2,17 @@ name: Actualizar programación PVPC
 
 on:
   schedule:
-    # 21:00 hora española = 19:00 UTC en verano (CEST) / 20:00 UTC en invierno (CET)
-    # Usamos 19:00 UTC para cubrir el horario de verano
     - cron: '0 19 * * *'
   workflow_dispatch:
 
 jobs:
   update:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GH_PAT }}
 
       - name: Python 3.11
         uses: actions/setup-python@v5
