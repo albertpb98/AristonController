@@ -1,0 +1,29 @@
+name: Control termo por hora
+
+on:
+  schedule:
+    # Cada hora en punto (UTC) — cubre las 24h del día
+    - cron: '0 * * * *'
+  workflow_dispatch:
+
+jobs:
+  control:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Instalar dependencias
+        run: pip install ariston requests python-dotenv
+
+      - name: Controlar termo según schedule
+        env:
+          ARISTON_USER:    ${{ secrets.ARISTON_USER }}
+          ARISTON_PASS:    ${{ secrets.ARISTON_PASS }}
+          ARISTON_GATEWAY: ${{ secrets.ARISTON_GATEWAY }}
+        run: python control_termo.py
